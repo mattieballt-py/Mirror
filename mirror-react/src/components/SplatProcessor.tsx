@@ -29,8 +29,8 @@ export default function SplatProcessor() {
   
   const videoInputRef = useRef<HTMLInputElement>(null)
   const csvInputRef = useRef<HTMLInputElement>(null)
-  const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null)
-  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const recordingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const pollingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   // Timer for recording
   useEffect(() => {

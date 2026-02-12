@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { GaussianSplats3D } from '@mkkellogg/gaussian-splats-3d'
+import { Viewer } from '@mkkellogg/gaussian-splats-3d'
 
 interface GaussianSplatViewerProps {
   plyUrls: string[]
@@ -8,7 +8,7 @@ interface GaussianSplatViewerProps {
 
 export default function GaussianSplatViewer({ plyUrls }: GaussianSplatViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const viewerRef = useRef<GaussianSplats3D | null>(null)
+  const viewerRef = useRef<Viewer | null>(null)
   const sceneRef = useRef<THREE.Scene | null>(null)
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
   const loadedUrlsRef = useRef<Set<string>>(new Set())
@@ -44,7 +44,7 @@ export default function GaussianSplatViewer({ plyUrls }: GaussianSplatViewerProp
     scene.add(directionalLight)
 
     // Initialize Gaussian Splats viewer
-    const viewer = new GaussianSplats3D({
+    const viewer = new Viewer({
       rootElement: containerRef.current,
       renderer: renderer,
       camera: camera,
@@ -73,7 +73,7 @@ export default function GaussianSplatViewer({ plyUrls }: GaussianSplatViewerProp
 
     return () => {
       window.removeEventListener('resize', handleResize)
-      if (containerRef.current && renderer.domElement) {
+      if (containerRef.current && renderer.domElement.parentNode) {
         containerRef.current.removeChild(renderer.domElement)
       }
       renderer.dispose()
