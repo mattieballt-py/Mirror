@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
+import SplatProcessor from './components/SplatProcessor'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -10,7 +11,6 @@ function App() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
-  const [recordedChunks, setRecordedChunks] = useState<Blob[]>([])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -126,6 +126,7 @@ function App() {
           <a href="#upload">Upload</a>
           <a href="#how-it-works">How It Works</a>
           <a href="#gallery">Gallery</a>
+          <a href="#splat-processor">3D Scenes</a>
         </div>
       </nav>
 
@@ -135,7 +136,7 @@ function App() {
       }}>
         <div className="hero-content">
           <h1 className="hero-title">Mirror Your World</h1>
-          <p className="hero-subtitle">Capture, Reflect, Transform</p>
+          <p className="hero-subtitle">Capture, Explore, Transform</p>
           <p className="hero-description">
             Experience the future of visual storytelling with AI-powered precision
           </p>
@@ -224,6 +225,8 @@ function App() {
           ))}
         </div>
       </section>
+
+      <SplatProcessor />
 
       <footer className="footer">
         <div className="footer-content">
