@@ -204,7 +204,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-  padding: 25rem 2rem 4rem;
+  padding: 15rem 2rem 4rem;
   background: white;
   border-bottom: 1px solid var(--border);
 }
