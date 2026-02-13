@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const CAPTURE_INTERVAL_MS = 2000
-const DEFAULT_UPLOAD_URL = '/upload-frame'
+const DEFAULT_UPLOAD_URL = 'https://mattieballt-py--so100-live-splat-upload-frame.modal.run'
 
 export default function CameraCapture() {
   const videoRef = useRef<HTMLVideoElement>(null)
