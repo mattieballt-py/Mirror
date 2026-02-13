@@ -36,9 +36,8 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  background: var(--primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .nav-inner {
@@ -60,6 +59,7 @@ body {
 .nav-logo {
   width: 40px;
   height: 40px;
+  filter: brightness(0) invert(1);
 }
 
 .nav-name {
@@ -68,25 +68,26 @@ body {
   font-family: 'Cormorant Garamond', 'Times New Roman', serif;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--primary);
+  color: white;
 }
 
 .nav-tagline {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
   align-items: center;
+  margin-left: auto;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: var(--text);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -94,15 +95,16 @@ body {
 }
 
 .nav-links a:hover {
-  color: var(--accent);
+  color: white;
 }
 
 .nav-cta {
   text-decoration: none;
   padding: 0.75rem 1.6rem;
   border-radius: 999px;
-  background: var(--primary);
+  background: #1b2a4a;
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -308,7 +310,7 @@ body {
 .scan-btn {
   width: 100%;
   padding: 1rem;
-  background: var(--accent);
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 8px;
@@ -327,9 +329,9 @@ body {
 }
 
 .scan-btn:hover {
-  background: #2563eb;
+  background: #0b1324;
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.3);
 }
 
 .scan-btn:active {
@@ -755,7 +757,7 @@ body {
   padding: 0.75rem;
   border-radius: 8px;
   border: none;
-  background: var(--accent);
+  background: var(--primary);
   color: white;
   font-weight: 600;
   cursor: pointer;
@@ -764,7 +766,7 @@ body {
 
 .footer-form button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3);
 }
 
 .footer-bottom {
