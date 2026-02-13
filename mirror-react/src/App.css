@@ -204,7 +204,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-  padding: 4rem 2rem 4rem;
+  padding: 8rem 2rem 4rem;
   background: white;
   border-bottom: 1px solid var(--border);
 }
@@ -362,7 +362,6 @@ body {
 .status-text {
   font-size: 0.95rem;
   color: var(--text-light);
-  margin-bottom: 0.5rem;
 }
 
 .frame-count {

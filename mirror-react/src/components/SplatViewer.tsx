@@ -78,7 +78,7 @@ export default function SplatViewer() {
         <div ref={containerRef} className="viewer-container" />
         {loadedChunksRef.current === 0 && (
           <div className="viewer-placeholder">
-            <img src="/so101arms.png" alt="Robot arms placeholder" className="placeholder-img" />
+            <img src="/splat.png" alt="3D preview placeholder" className="placeholder-img" />
             <div className="placeholder-text">
               <p>3D reconstruction will appear here</p>
               <small>Waiting for streaming PLY data...</small>
