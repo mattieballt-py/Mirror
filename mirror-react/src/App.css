@@ -47,7 +47,6 @@ body {
   padding: 1.1rem 1.25rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 2rem;
 }
 
@@ -55,6 +54,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex: 1;
 }
 
 .nav-logo {
@@ -83,7 +83,6 @@ body {
   display: flex;
   gap: 2rem;
   align-items: center;
-  margin-left: auto;
 }
 
 .nav-links a {
