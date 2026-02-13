@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import LiveScanHero from './components/LiveScanHero'
-import SplatViewer from './components/SplatViewer'
-import RoboticsLab from './components/RoboticsLab'
+import LiveScanHero from './components/LiveScanHero.tsx'
+import SplatViewer from './components/SplatViewer.tsx'
+import RoboticsLab from './components/RoboticsLab.tsx'
 
 function App() {
   const [loading, setLoading] = useState(true)
