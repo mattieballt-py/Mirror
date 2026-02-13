@@ -68,7 +68,7 @@ export default function SplatViewer() {
   }, [])
 
   return (
-    <section className="viewer-section">
+    <section className="viewer-section" id="viewer">
       <div className="viewer-header">
         <h2>3D Scene Reconstruction</h2>
         <p>Real-time PLY streaming from backend</p>

@@ -112,7 +112,7 @@ export default function LiveScanHero() {
   }
 
   return (
-    <section className="hero-section">
+    <section className="hero-section" id="scan">
       <div className="hero-container">
         <div className="hero-left">
           <h1 className="hero-title">Live 3D Scanning</h1>
@@ -189,7 +189,16 @@ export default function LiveScanHero() {
                 className={`scan-btn ${isScanning ? 'active' : ''}`}
                 onClick={isScanning ? stopScanning : startScanning}
               >
-                {isScanning ? '⏹ Stop Scanning' : '🎥 Start Scanning'}
+                <img
+                  src={
+                    isScanning
+                      ? '/stop-circle-svgrepo-com.svg'
+                      : '/record-square-svgrepo-com.svg'
+                  }
+                  alt=""
+                  className="button-icon"
+                />
+                {isScanning ? 'Stop Scanning' : 'Start Scanning'}
               </button>
             </div>
 
@@ -206,10 +215,11 @@ export default function LiveScanHero() {
             <canvas ref={canvasRef} className="hidden-canvas" />
             {!isScanning && (
               <div className="video-placeholder">
-                <svg className="camera-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                  <circle cx="12" cy="13" r="4" />
-                </svg>
+                <img
+                  src="/camera-minimalistic-svgrepo-com.svg"
+                  alt=""
+                  className="placeholder-icon"
+                />
                 <p>Camera Stream</p>
               </div>
             )}
