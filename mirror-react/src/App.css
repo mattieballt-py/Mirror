@@ -361,6 +361,55 @@
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
   max-width: 1400px;
+
+/* Capture Section */
+.capture-section {
+  padding: 8rem 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f6f7fb 100%);
+}
+
+.capture-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.capture-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.capture-preview {
+  margin-top: 2.5rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f1f3f5;
+  border: 1px solid #e2e4e8;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capture-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.capture-canvas {
+  display: none;
+}
+
+.capture-status {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
   margin: 0 auto;
   width: 100%;
 }

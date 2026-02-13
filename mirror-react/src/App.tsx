@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import SplatProcessor from './components/SplatProcessor'
+import CameraCapture from './components/CameraCapture'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -124,6 +125,7 @@ function App() {
         <div className="nav-links">
           <a href="#hero">Home</a>
           <a href="#upload">Upload</a>
+          <a href="#capture">Capture</a>
           <a href="#how-it-works">How It Works</a>
           <a href="#gallery">Gallery</a>
           <a href="#splat-processor">3D Scenes</a>
@@ -225,6 +227,8 @@ function App() {
           ))}
         </div>
       </section>
+
+      <CameraCapture />
 
       <SplatProcessor />
 
