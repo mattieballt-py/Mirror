@@ -32,12 +32,28 @@ export default function CameraCapture() {
 
   const sendFrame = async (blob: Blob) => {
     const formData = new FormData()
-    formData.append('frame', blob, `frame-${Date.now()}.jpg`)
+    formData.append('file', blob, `frame-${Date.now()}.jpg`)
 
-    await fetch(uploadUrl, {
-      method: 'POST',
-      body: formData
-    })
+    try {
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error(`Upload failed (${response.status}):`, errorText)
+        setStatus(`Error: ${response.status} - ${errorText.substring(0, 100)}`)
+        return
+      }
+
+      const result = await response.json()
+      console.log('Frame uploaded:', result)
+      setStatus(`Capturing... (last upload: ${new Date().toLocaleTimeString()})`)
+    } catch (error) {
+      console.error('Upload error:', error)
+      setStatus(`Network error: ${error}`)
+    }
   }
 
   const captureFrame = async () => {
