@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
 import { Viewer } from '@mkkellogg/gaussian-splats-3d'
-import * as THREE from 'three'
 
 interface SplatViewerProps {
   jobId: string | null
@@ -34,78 +33,38 @@ export default function SplatViewer({ jobId }: SplatViewerProps) {
     
     try {
       const testUrl = 'https://pub-8483e6a1db1342bda70ce67e0a39a8cc.r2.dev/20260214_103553/splat_000.ply'
-      console.log('Loading test PLY:', testUrl)
+      console.log('Adding splat scene:', testUrl)
       
-      await viewerRef.current.addSplatScene(testUrl)
+      await viewerRef.current.addSplatScene(testUrl, {
+        splatAlphaRemovalThreshold: 5,
+      }).catch((error) => {
+        console.error('Error in addSplatScene promise - Full error:', error)
+        throw error
+      })
       
+      console.log('Splat scene added successfully')
       loadedChunksRef.current.push('test_splat_000.ply')
       setProgress(1.0)
       setIsComplete(true)
-      console.log('Test PLY loaded successfully!')
     } catch (error) {
-      console.error('Error loading test PLY:', error)
+      console.error('Error loading test PLY - Full error:', error)
       setIsProcessing(false)
     }
   }
 
-  // Initialize Three.js scene and viewer
+  // Initialize viewer
   useEffect(() => {
     if (!containerRef.current) return
 
-    const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0xf5f5f5)
-
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      containerRef.current.clientWidth / containerRef.current.clientHeight,
-      0.1,
-      1000
-    )
-    camera.position.set(0, 0, 3)
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
-    renderer.setPixelRatio(window.devicePixelRatio)
-    containerRef.current.appendChild(renderer.domElement)
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7)
-    scene.add(ambientLight)
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
-    directionalLight.position.set(5, 5, 5)
-    scene.add(directionalLight)
-
     const viewer = new Viewer({
       rootElement: containerRef.current,
-      renderer: renderer,
-      camera: camera,
-      scene: scene,
     })
+    
+    console.log('Viewer initialised')
+    
     viewerRef.current = viewer
 
-    const animate = () => {
-      requestAnimationFrame(animate)
-      renderer.render(scene, camera)
-    }
-    animate()
-
-    const handleResize = () => {
-      if (!containerRef.current) return
-      const width = containerRef.current.clientWidth
-      const height = containerRef.current.clientHeight
-      camera.aspect = width / height
-      camera.updateProjectionMatrix()
-      renderer.setSize(width, height)
-    }
-
-    window.addEventListener('resize', handleResize)
-
     return () => {
-      window.removeEventListener('resize', handleResize)
-      if (containerRef.current && renderer.domElement.parentNode) {
-        containerRef.current.removeChild(renderer.domElement)
-      }
-      renderer.dispose()
       if (viewerRef.current) {
         viewerRef.current.dispose()
       }
@@ -174,14 +133,18 @@ export default function SplatViewer({ jobId }: SplatViewerProps) {
 
     try {
       const chunkUrl = `${R2_PUBLIC_URL}/${chunkPath}`
-      console.log('Loading chunk:', chunkUrl)
+      console.log('Adding splat scene:', chunkUrl)
       
-      // Load PLY file - the library auto-detects format from file extension
-      await viewerRef.current.addSplatScene(chunkUrl)
+      await viewerRef.current.addSplatScene(chunkUrl, {
+        splatAlphaRemovalThreshold: 5,
+      }).catch((error) => {
+        console.error('Error in addSplatScene promise - Full error:', error)
+        throw error
+      })
       
-      console.log('Chunk loaded successfully:', chunkPath)
+      console.log('Splat scene added successfully')
     } catch (error) {
-      console.error('Error loading chunk:', chunkPath, error)
+      console.error('Error loading chunk:', chunkPath, '- Full error:', error)
     }
   }
 
@@ -195,7 +158,11 @@ export default function SplatViewer({ jobId }: SplatViewerProps) {
       </div>
 
       <div className="viewer-wrapper">
-        <div ref={containerRef} className="viewer-container" />
+        <div 
+          ref={containerRef} 
+          className="viewer-container"
+          style={{ width: '100%', height: '500px', position: 'relative' }}
+        />
         
         {showPlaceholder && (
           <div className="viewer-placeholder">
