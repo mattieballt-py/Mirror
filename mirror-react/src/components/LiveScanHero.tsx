@@ -17,18 +17,43 @@ export default function LiveScanHero() {
   const [leaderArm, setLeaderArm] = useState('')
   const [status, setStatus] = useState('Ready to scan')
   const [frameCount, setFrameCount] = useState(0)
+  const [detectingCameras, setDetectingCameras] = useState(false)
+
+  const detectCameras = async () => {
+    setDetectingCameras(true)
+    try {
+      // Request camera permission to get device labels
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      // Stop the stream immediately - we just needed permission
+      stream.getTracks().forEach(track => track.stop())
+
+      // Now enumerate devices - labels will be populated after permission
+      const deviceList = await navigator.mediaDevices.enumerateDevices()
+      const cameras = deviceList.filter(d => d.kind === 'videoinput')
+      setDevices(cameras as Device[])
+      setStatus(`Found ${cameras.length} camera(s)`)
+    } catch (error) {
+      console.error('Error detecting cameras:', error)
+      setStatus('Unable to detect cameras. Check permissions.')
+    } finally {
+      setDetectingCameras(false)
+    }
+  }
 
   useEffect(() => {
-    const getDevices = async () => {
+    // Try to enumerate devices without requesting permission first
+    const queryDevices = async () => {
       try {
         const deviceList = await navigator.mediaDevices.enumerateDevices()
         const cameras = deviceList.filter(d => d.kind === 'videoinput')
-        setDevices(cameras as Device[])
+        if (cameras.length > 0) {
+          setDevices(cameras as Device[])
+        }
       } catch (error) {
-        console.error('Error enumerating devices:', error)
+        console.error('Error querying devices:', error)
       }
     }
-    getDevices()
+    queryDevices()
   }, [])
 
   const uploadFrameUrl = 'https://mattieballt-py--so100-live-splat-upload-frame.modal.run'
@@ -122,6 +147,18 @@ export default function LiveScanHero() {
           </p>
 
           <div className="controls-panel">
+            {devices.length === 0 && (
+              <div className="control-group">
+                <button
+                  onClick={detectCameras}
+                  disabled={detectingCameras}
+                  className="detect-btn"
+                >
+                  {detectingCameras ? 'Detecting cameras...' : 'Detect Cameras'}
+                </button>
+              </div>
+            )}
+
             <div className="control-group">
               <label className="control-label">Robot Arm Integration</label>
               <div className="radio-toggle">
