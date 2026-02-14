@@ -519,7 +519,7 @@ body {
 
 /* Robotics Section */
 .robotics-section {
-  padding: 4rem 2rem;
+  padding: 12rem 2rem;
   background: var(--light);
   border-bottom: 1px solid var(--border);
 }
@@ -595,7 +595,7 @@ body {
 /* Research Grid */
 .research-grid {
   max-width: 1200px;
-  margin: 3rem auto;
+  margin: 10rem auto 3rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
