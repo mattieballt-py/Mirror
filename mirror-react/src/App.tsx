@@ -7,6 +7,12 @@ import RoboticsLab from './components/RoboticsLab.tsx'
 function App() {
   const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState(0)
+  const [jobId, setJobId] = useState<string | null>(null)
+
+  const handleJobIdReceived = (id: string) => {
+    setJobId(id)
+    console.log('App received job_id:', id)
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,8 +67,8 @@ function App() {
         </div>
       </nav>
 
-      <LiveScanHero />
-      <SplatViewer />
+      <LiveScanHero onJobIdReceived={handleJobIdReceived} />
+      <SplatViewer jobId={jobId} />
       <RoboticsLab />
 
       <footer className="footer" id="contact">

@@ -542,6 +542,47 @@ body {
   animation: slideInUp 0.6s ease;
 }
 
+.viewer-status-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+  padding: 2rem;
+  z-index: 20;
+  animation: slideInUp 0.4s ease;
+}
+
+.status-content {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.status-message {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.progress-bar-viewer {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill-viewer {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
 /* Robotics Section */
 .robotics-section {
   padding: 12rem 2rem;

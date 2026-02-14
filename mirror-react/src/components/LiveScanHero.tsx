@@ -5,7 +5,11 @@ interface Device {
   label: string
 }
 
-export default function LiveScanHero() {
+interface LiveScanHeroProps {
+  onJobIdReceived?: (jobId: string) => void
+}
+
+export default function LiveScanHero({ onJobIdReceived }: LiveScanHeroProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -18,6 +22,7 @@ export default function LiveScanHero() {
   const [status, setStatus] = useState('Ready to scan')
   const [frameCount, setFrameCount] = useState(0)
   const [detectingCameras, setDetectingCameras] = useState(false)
+  const [currentJobId, setCurrentJobId] = useState<string | null>(null)
 
   const detectCameras = async () => {
     setDetectingCameras(true)
@@ -61,6 +66,11 @@ export default function LiveScanHero() {
   const uploadFrame = async (blob: Blob) => {
     const formData = new FormData()
     formData.append('file', blob, `frame-${Date.now()}.jpg`)
+    
+    // Include job_id if we have one
+    if (currentJobId) {
+      formData.append('job_id', currentJobId)
+    }
 
     try {
       const response = await fetch(uploadFrameUrl, {
@@ -72,6 +82,17 @@ export default function LiveScanHero() {
         const errorText = await response.text()
         console.error(`Upload error: ${response.status}:`, errorText)
       } else {
+        const data = await response.json()
+        
+        // If this is the first frame, we receive a job_id
+        if (data.job_id && !currentJobId) {
+          setCurrentJobId(data.job_id)
+          if (onJobIdReceived) {
+            onJobIdReceived(data.job_id)
+          }
+          console.log('Received job_id:', data.job_id)
+        }
+        
         setFrameCount(prev => prev + 1)
       }
     } catch (error) {
@@ -133,7 +154,8 @@ export default function LiveScanHero() {
     }
 
     setIsScanning(false)
-    setStatus('Scanning stopped')
+    setStatus('Scanning stopped - processing PLY chunks...')
+    // Don't reset currentJobId - we need it for the viewer to poll
   }
 
   return (
@@ -182,43 +204,41 @@ export default function LiveScanHero() {
               </div>
             </div>
 
-            {roboticsEnabled && (
-              <>
-                <div className="control-group">
-                  <label htmlFor="leader-arm" className="control-label">
-                    Leader Arm Camera
-                  </label>
-                  <select
-                    id="leader-arm"
-                    value={leaderArm}
-                    onChange={e => setLeaderArm(e.target.value)}
-                    className="control-select"
-                  >
-                    <option value="">Select camera...</option>
-                    {devices.map(d => (
-                      <option key={d.deviceId} value={d.deviceId}>
-                        {d.label || `Camera ${d.deviceId.substring(0, 8)}`}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            <div className="control-group">
+              <label htmlFor="leader-arm" className="control-label">
+                Select Camera
+              </label>
+              <select
+                id="leader-arm"
+                value={leaderArm}
+                onChange={e => setLeaderArm(e.target.value)}
+                className="control-select"
+              >
+                <option value="">Choose a camera...</option>
+                {devices.map(d => (
+                  <option key={d.deviceId} value={d.deviceId}>
+                    {d.label || `Camera ${d.deviceId.substring(0, 8)}`}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-                <div className="control-group">
-                  <label htmlFor="follower-arm" className="control-label">
-                    Follower Arm (for reference)
-                  </label>
-                  <select
-                    id="follower-arm"
-                    value={followerArm}
-                    onChange={e => setFollowerArm(e.target.value)}
-                    className="control-select"
-                  >
-                    <option value="">Select arm...</option>
-                    <option value="arm-1">Arm 1</option>
-                    <option value="arm-2">Arm 2</option>
-                  </select>
-                </div>
-              </>
+            {roboticsEnabled && (
+              <div className="control-group">
+                <label htmlFor="follower-arm" className="control-label">
+                  Follower Arm (for reference)
+                </label>
+                <select
+                  id="follower-arm"
+                  value={followerArm}
+                  onChange={e => setFollowerArm(e.target.value)}
+                  className="control-select"
+                >
+                  <option value="">Select arm...</option>
+                  <option value="arm-1">Arm 1</option>
+                  <option value="arm-2">Arm 2</option>
+                </select>
+              </div>
             )}
 
             <div className="button-group">
