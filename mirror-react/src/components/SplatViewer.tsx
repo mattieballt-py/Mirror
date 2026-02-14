@@ -32,7 +32,7 @@ export default function SplatViewer({ jobId }: SplatViewerProps) {
     setIsProcessing(true)
     
     try {
-      const testUrl = 'https://pub-8483e6a1db1342bda70ce67e0a39a8cc.r2.dev/20260214_103553/splat_000.ply'
+      const testUrl = 'https://pub-8483e6a1db1342bda70ce67e0a39a8cc.r2.dev/20260214_110839/splat_000.ply'
       console.log('Adding splat scene:', testUrl)
       
       await viewerRef.current.addSplatScene(testUrl, {
