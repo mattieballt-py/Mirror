@@ -58,11 +58,17 @@ export default function SplatViewer({ jobId }: SplatViewerProps) {
 
     const viewer = new Viewer({
       rootElement: containerRef.current,
+      // @ts-expect-error - Runtime options not in TypeScript definitions
+      selfDrivenMode: true,
+      useWorkers: false,
+      sharedMemoryForWorkers: false,
     })
     
     console.log('Viewer initialised')
     
     viewerRef.current = viewer
+    // @ts-expect-error - start() method exists at runtime
+    viewer.start()
 
     return () => {
       if (viewerRef.current) {
