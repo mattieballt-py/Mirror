@@ -540,6 +540,30 @@ body {
   font-size: 0.9rem;
   color: var(--text-light);
   animation: slideInUp 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.test-ply-btn {
+  padding: 0.6rem 1.2rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.test-ply-btn:hover {
+  background: #0b1324;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
 }
 
 .viewer-status-overlay {

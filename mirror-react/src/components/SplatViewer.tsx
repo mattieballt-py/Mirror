@@ -21,8 +21,32 @@ export default function SplatViewer({ jobId }: SplatViewerProps) {
   const [progress, setProgress] = useState(0)
   const [isComplete, setIsComplete] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [testMode, setTestMode] = useState(false)
 
   const R2_PUBLIC_URL = import.meta.env.VITE_R2_PUBLIC_URL || ''
+
+  // Test function to load the existing PLY directly
+  const loadTestPLY = async () => {
+    if (!viewerRef.current) return
+    
+    setTestMode(true)
+    setIsProcessing(true)
+    
+    try {
+      const testUrl = 'https://pub-8483e6a1db1342bda70ce67e0a39a8cc.r2.dev/20260214_103553/splat_000.ply'
+      console.log('Loading test PLY:', testUrl)
+      
+      await viewerRef.current.addSplatScene(testUrl)
+      
+      loadedChunksRef.current.push('test_splat_000.ply')
+      setProgress(1.0)
+      setIsComplete(true)
+      console.log('Test PLY loaded successfully!')
+    } catch (error) {
+      console.error('Error loading test PLY:', error)
+      setIsProcessing(false)
+    }
+  }
 
   // Initialize Three.js scene and viewer
   useEffect(() => {
@@ -201,6 +225,11 @@ export default function SplatViewer({ jobId }: SplatViewerProps) {
       <div className="viewer-stats">
         <span>Chunks loaded: {loadedChunksRef.current.length}</span>
         {isProcessing && <span> • Progress: {Math.round(progress * 100)}%</span>}
+        {!jobId && !testMode && (
+          <button onClick={loadTestPLY} className="test-ply-btn">
+            Load Test PLY
+          </button>
+        )}
       </div>
     </section>
   )
