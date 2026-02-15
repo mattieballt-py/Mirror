@@ -1,18 +1,77 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
 import './App.css'
-import LiveScanHero from './components/LiveScanHero.tsx'
-import SplatViewer from './components/SplatViewer.tsx'
-import RoboticsLab from './components/RoboticsLab.tsx'
+import LandingPage from './components/LandingPage'
+import ContactForm from './components/ContactForm'
+import TestingPage from './components/TestingPage'
+import Footer from './components/Footer'
+
+function Navigation() {
+  const location = useLocation()
+  const isTestingPage = location.pathname === '/testing'
+
+  if (isTestingPage) {
+    // Original navigation for testing page
+    return (
+      <nav className="nav">
+        <div className="nav-inner">
+          <div className="nav-brand">
+            <Link to="/">
+              <img src="/Mirrorv0.svg" alt="Mirror logo" className="nav-logo" />
+            </Link>
+            <div>
+              <p className="nav-name">Mirror Labs</p>
+              <p className="nav-tagline">Incremental 3D Gaussian Splatting</p>
+            </div>
+          </div>
+
+          <div className="nav-links">
+            <a href="#scan">Live Scan</a>
+            <a href="#viewer">Reconstruction</a>
+            <a href="#robotics">Robotics Lab</a>
+            <a href="#docs">Docs</a>
+          </div>
+
+          <Link className="nav-cta" to="/contact">
+            Early Access
+          </Link>
+        </div>
+      </nav>
+    )
+  }
+
+  // Landing page navigation
+  return (
+    <nav className="nav">
+      <div className="nav-inner">
+        <div className="nav-brand">
+          <Link to="/">
+            <img src="/Mirrorv0.svg" alt="Mirror logo" className="nav-logo" />
+          </Link>
+          <div>
+            <p className="nav-name">Mirror Labs</p>
+            <p className="nav-tagline">Spatial Intelligence Platform</p>
+          </div>
+        </div>
+
+        <div className="nav-links">
+          <a href="#benefits">Benefits</a>
+          <a href="#use-cases">Use Cases</a>
+          <a href="#technology">Technology</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <Link className="nav-cta" to="/contact">
+          Early Access
+        </Link>
+      </div>
+    </nav>
+  )
+}
 
 function App() {
   const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState(0)
-  const [jobId, setJobId] = useState<string | null>(null)
-
-  const handleJobIdReceived = (id: string) => {
-    setJobId(id)
-    console.log('App received job_id:', id)
-  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,7 +92,7 @@ function App() {
       <div className="loader">
         <div className="loader-content">
           <h1 className="loader-text">Mirror</h1>
-          <p className="loader-subtitle">3D Gaussian Splatting</p>
+          <p className="loader-subtitle">Spatial Intelligence Platform</p>
           <div className="progress-bar">
             <div className="progress-fill" style={{ width: `${progress}%` }}></div>
           </div>
@@ -43,102 +102,19 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <nav className="nav">
-        <div className="nav-inner">
-          <div className="nav-brand">
-            <img src="/Mirrorv0.svg" alt="Mirror logo" className="nav-logo" />
-            <div>
-              <p className="nav-name">Mirror Labs</p>
-              <p className="nav-tagline">Incremental 3D Gaussian Splatting</p>
-            </div>
-          </div>
+    <Router>
+      <div className="app">
+        <Navigation />
 
-          <div className="nav-links">
-            <a href="#scan">Live Scan</a>
-            <a href="#viewer">Reconstruction</a>
-            <a href="#robotics">Robotics Lab</a>
-            <a href="#docs">Docs</a>
-          </div>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/contact" element={<ContactForm />} />
+          <Route path="/testing" element={<TestingPage />} />
+        </Routes>
 
-          <a className="nav-cta" href="#contact">
-            I want this
-          </a>
-        </div>
-      </nav>
-
-      <LiveScanHero onJobIdReceived={handleJobIdReceived} />
-      <SplatViewer jobId={jobId} />
-      <RoboticsLab />
-
-      <footer className="footer" id="contact">
-        <div className="footer-inner">
-          <div className="footer-top">
-            <div className="footer-brand">
-              <h2 className="footer-logo">Mirror Labs</h2>
-              <p className="footer-tagline">
-                Precision 3D reconstruction and robotics lab infrastructure for
-                reliable spatial intelligence.
-              </p>
-            </div>
-
-            <div className="footer-column" id="docs">
-              <h3>Site</h3>
-              <a href="#">Platform</a>
-              <a href="#">Security</a>
-              <a href="#">Pricing</a>
-              <a href="#">Contact</a>
-            </div>
-
-            <div className="footer-column">
-              <h3>Docs</h3>
-              <a href="https://github.com/mattieballt-py/Mirror" target="_blank" rel="noreferrer">
-                Frontend Repository
-              </a>
-              <a href="https://github.com/mattieballt-py/Mirror_Backend" target="_blank" rel="noreferrer">
-                Backend Repository
-              </a>
-              <a href="#">API Reference</a>
-              <a href="#">Deployment Guide</a>
-            </div>
-
-            <div className="footer-column">
-              <h3>Research</h3>
-              <a href="https://arxiv.org/abs/2308.04079" target="_blank" rel="noreferrer">
-                3D Gaussian Splatting (2023)
-              </a>
-              <a href="https://arxiv.org/abs/2003.08934" target="_blank" rel="noreferrer">
-                NeRF (2020)
-              </a>
-              <a href="https://arxiv.org/abs/2302.11283" target="_blank" rel="noreferrer">
-                Instant-NGP (2022)
-              </a>
-              <a href="https://arxiv.org/abs/2312.03880" target="_blank" rel="noreferrer">
-                Spatio-Temporal Splats (2023)
-              </a>
-            </div>
-
-            <div className="footer-column">
-              <h3>Stay Updated</h3>
-              <p className="footer-note">Get product updates and research releases.</p>
-              <form className="footer-form">
-                <input type="email" placeholder="Email address" aria-label="Email address" />
-                <button type="submit">Subscribe</button>
-              </form>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <p>&copy; 2026 Mirror Labs. All rights reserved.</p>
-            <div className="footer-links">
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-              <a href="#">Status</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+        <Footer />
+      </div>
+    </Router>
   )
 }
 
