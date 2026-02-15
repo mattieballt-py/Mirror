@@ -60,6 +60,7 @@ body {
   display: flex;
   align-items: center;
   gap: 2rem;
+  position: relative;
 }
 
 .nav-brand {
@@ -73,6 +74,11 @@ body {
   width: 40px;
   height: 40px;
   filter: brightness(0) invert(1);
+}
+
+.nav-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-name {
@@ -127,6 +133,38 @@ body {
   background: #24365f;
   transform: translateY(-1px);
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.hamburger-line {
+  width: 25px;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger-line.open:nth-child(1) {
+  transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger-line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-line.open:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
 }
 
 /* Loader */
@@ -1778,26 +1816,56 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   .nav-inner {
+    padding: 1rem 1.25rem;
+    justify-content: space-between;
+  }
+
+  /* Hide text on mobile, show only logo */
+  .nav-text {
+    display: none;
+  }
+
+  .nav-brand {
+    flex: 0;
+  }
+
+  /* Show hamburger menu */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Mobile menu styling */
+  .nav-links.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--primary);
     flex-direction: column;
+    gap: 0;
+    padding: 5rem 2rem 2rem;
+    transition: right 0.3s ease;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
     align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
   }
 
-  .nav-links {
-    flex-wrap: wrap;
-    gap: 0.75rem;
+  .nav-links.mobile-menu.open {
+    right: 0;
+  }
+
+  .nav-links.mobile-menu a {
     width: 100%;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
   }
 
-  .nav-links a {
-    font-size: 0.8rem;
-  }
-
-  .nav-cta {
+  .nav-links.mobile-menu .nav-cta {
+    margin-top: 1.5rem;
     width: 100%;
     text-align: center;
-    margin-top: 0.5rem;
+    border-bottom: none;
   }
 
   .hero-container,

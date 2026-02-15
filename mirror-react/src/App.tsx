@@ -9,6 +9,10 @@ import Footer from './components/Footer'
 function Navigation() {
   const location = useLocation()
   const isTestingPage = location.pathname === '/testing'
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const toggleMenu = () => setMenuOpen(!menuOpen)
+  const closeMenu = () => setMenuOpen(false)
 
   if (isTestingPage) {
     // Original navigation for testing page
@@ -16,27 +20,32 @@ function Navigation() {
       <nav className="nav">
         <div className="nav-inner">
           <div className="nav-brand">
-            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <Link to="/" onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); closeMenu(); }}>
               <img src="/Mirrorv0.svg" alt="Mirror logo" className="nav-logo" />
             </Link>
-            <div>
-              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ textDecoration: 'none' }}>
+            <div className="nav-text">
+              <Link to="/" onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); closeMenu(); }} style={{ textDecoration: 'none' }}>
                 <p className="nav-name">Mirror Labs</p>
                 <p className="nav-tagline">Incremental 3D Gaussian Splatting</p>
               </Link>
             </div>
           </div>
 
-          <div className="nav-links">
-            <a href="#scan">Live Scan</a>
-            <a href="#viewer">Reconstruction</a>
-            <a href="#robotics">Robotics Lab</a>
-            <a href="#docs">Docs</a>
-          </div>
+          <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
+            <span className={menuOpen ? 'hamburger-line open' : 'hamburger-line'}></span>
+            <span className={menuOpen ? 'hamburger-line open' : 'hamburger-line'}></span>
+            <span className={menuOpen ? 'hamburger-line open' : 'hamburger-line'}></span>
+          </button>
 
-          <Link className="nav-cta" to="/contact">
-            Early Access
-          </Link>
+          <div className={menuOpen ? 'nav-links mobile-menu open' : 'nav-links mobile-menu'}>
+            <a href="#scan" onClick={closeMenu}>Live Scan</a>
+            <a href="#viewer" onClick={closeMenu}>Reconstruction</a>
+            <a href="#robotics" onClick={closeMenu}>Robotics Lab</a>
+            <a href="#docs" onClick={closeMenu}>Docs</a>
+            <Link className="nav-cta" to="/contact" onClick={closeMenu}>
+              Early Access
+            </Link>
+          </div>
         </div>
       </nav>
     )
@@ -47,27 +56,32 @@ function Navigation() {
     <nav className="nav">
       <div className="nav-inner">
         <div className="nav-brand">
-          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <Link to="/" onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); closeMenu(); }}>
             <img src="/Mirrorv0.svg" alt="Mirror logo" className="nav-logo" />
           </Link>
-          <div>
-            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ textDecoration: 'none' }}>
+          <div className="nav-text">
+            <Link to="/" onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); closeMenu(); }} style={{ textDecoration: 'none' }}>
               <p className="nav-name">Mirror Labs</p>
               <p className="nav-tagline">Spatial Intelligence Platform</p>
             </Link>
           </div>
         </div>
 
-        <div className="nav-links">
-          <a href="#benefits">Benefits</a>
-          <a href="#use-cases">Use Cases</a>
-          <a href="#technology">Technology</a>
-          <a href="#contact">Contact</a>
-        </div>
+        <button className="hamburger" onClick={toggleMenu} aria-label="Toggle menu">
+          <span className={menuOpen ? 'hamburger-line open' : 'hamburger-line'}></span>
+          <span className={menuOpen ? 'hamburger-line open' : 'hamburger-line'}></span>
+          <span className={menuOpen ? 'hamburger-line open' : 'hamburger-line'}></span>
+        </button>
 
-        <Link className="nav-cta" to="/contact">
-          Early Access
-        </Link>
+        <div className={menuOpen ? 'nav-links mobile-menu open' : 'nav-links mobile-menu'}>
+          <a href="#benefits" onClick={closeMenu}>Benefits</a>
+          <a href="#use-cases" onClick={closeMenu}>Use Cases</a>
+          <a href="#technology" onClick={closeMenu}>Technology</a>
+          <a href="#contact" onClick={closeMenu}>Contact</a>
+          <Link className="nav-cta" to="/contact" onClick={closeMenu}>
+            Early Access
+          </Link>
+        </div>
       </div>
     </nav>
   )
