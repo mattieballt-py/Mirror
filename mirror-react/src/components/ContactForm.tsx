@@ -156,7 +156,7 @@ export default function ContactForm() {
 
         <div className="contact-info">
           <h3>Questions?</h3>
-          <p>Email us at <a href="mailto:hello@mirrorlabs.ai">hello@mirrorlabs.ai</a></p>
+          <p>Email us at <a href="mailto:hello@roboticsmirror.co.uk">hello@roboticsmirror.co.uk</a></p>
         </div>
       </div>
     </section>

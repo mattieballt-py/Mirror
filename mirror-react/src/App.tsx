@@ -16,12 +16,14 @@ function Navigation() {
       <nav className="nav">
         <div className="nav-inner">
           <div className="nav-brand">
-            <Link to="/">
+            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <img src="/Mirrorv0.svg" alt="Mirror logo" className="nav-logo" />
             </Link>
             <div>
-              <p className="nav-name">Mirror Labs</p>
-              <p className="nav-tagline">Incremental 3D Gaussian Splatting</p>
+              <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ textDecoration: 'none' }}>
+                <p className="nav-name">Mirror Labs</p>
+                <p className="nav-tagline">Incremental 3D Gaussian Splatting</p>
+              </Link>
             </div>
           </div>
 
@@ -45,12 +47,14 @@ function Navigation() {
     <nav className="nav">
       <div className="nav-inner">
         <div className="nav-brand">
-          <Link to="/">
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <img src="/Mirrorv0.svg" alt="Mirror logo" className="nav-logo" />
           </Link>
           <div>
-            <p className="nav-name">Mirror Labs</p>
-            <p className="nav-tagline">Spatial Intelligence Platform</p>
+            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ textDecoration: 'none' }}>
+              <p className="nav-name">Mirror Labs</p>
+              <p className="nav-tagline">Spatial Intelligence Platform</p>
+            </Link>
           </div>
         </div>
 
